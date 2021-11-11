@@ -6,16 +6,22 @@
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
+        <li class="nav-item {{Request::is('/') ? 'active':''}}">
           <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
         </li>
         
-        <li class="nav-item">
+        <li class="nav-item {{Request::is('about') ? 'active':''}}">
           <a class="nav-link" href="/about">About</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item {{Request::is('contact') ? 'active':''}}">
             <a class="nav-link" href="/contact">Contact</a>
-          </li>
+        </li>
+        <li class="nav-item {{Request::is('login') ? 'active':''}}">
+            <a class="nav-link" href="login">Login</a>
+        </li>
+        <li class="nav-item {{Request::is('register') ? 'active':''}}">
+            <a class="nav-link" href="register">Register</a>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="nav-item dropdown">
@@ -23,10 +29,15 @@
             My Account
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <form method="POST" action="{{ route('logout') }}">
+              @csrf
+
+              <x-dropdown-link :href="route('logout')"
+                      onclick="event.preventDefault();
+                                  this.closest('form').submit();">
+                  {{ __('Log Out') }}
+              </x-dropdown-link>
+          </form>
           </div>
         </li>
       </ul>

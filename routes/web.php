@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,16 +18,23 @@ use App\Http\Controllers\PageController;
 */
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+
+Route::get('/dashboard',[DashboardController::class,'index'])->name('dash');
+
+
+Route::get('/downloads', function () {
+    return view('downloads');
+})->middleware(['auth'])->name('downloads');
 
 require __DIR__.'/auth.php';
 
-Route::get('/', function () {
-    return view('pages.welcome');
-});
 
+Route::get('/',[PageController::class,'home']);
 Route::get('/about',[PageController::class,'about']);
 Route::get('/contact',[PageController::class,'contact']);
 
+Route::resource('post',PostController::class);
+
+Route::get('blog/{slug}',[BlogController::class,'getSingle'])
+->where('slug','[@\w\d\-\_]+')
+->name('blog.single');
