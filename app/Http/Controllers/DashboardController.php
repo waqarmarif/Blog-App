@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -13,7 +14,9 @@ class DashboardController extends Controller
         if (Auth::user()) {
             $user = User::find(Auth::user());
             if (Auth::user()->hasRole('superadministrator')) {
-                return view('dashboard');
+                $posts= Post::all();
+                return view('posts.index')->withPosts($posts);
+
             } elseif(Auth::user()->hasRole('administrator')) {
 
                 return view('downloads');

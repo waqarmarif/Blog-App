@@ -7,6 +7,16 @@
     <div class="col-md-8">
         <h1>{{$post->title}}</h1>
         <p>{{$post->body}}</p>
+        <hr>
+            @foreach ($post->tags as $tag)
+                
+                    <p class="badge badge-success p-1">
+                        {{$tag->name}}
+                    </p>
+                   
+                
+            @endforeach
+        
     </div>
     <div class="col-md-4">
         <div class="card card-body bg-light">

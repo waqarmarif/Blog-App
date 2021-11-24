@@ -16,29 +16,52 @@
         <li class="nav-item {{Request::is('contact') ? 'active':''}}">
             <a class="nav-link" href="/contact">Contact</a>
         </li>
+        @auth
+        <li class="nav-item">
+          <a class="nav-link" href="{{route('dash')}}">{{Auth::user()->name}}</a>
+      </li>
+        @else
         <li class="nav-item {{Request::is('login') ? 'active':''}}">
             <a class="nav-link" href="login">Login</a>
         </li>
         <li class="nav-item {{Request::is('register') ? 'active':''}}">
             <a class="nav-link" href="register">Register</a>
         </li>
+        @endauth
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="nav-item dropdown">
+          @auth
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            My Account
+            {{Auth::user()->name}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <form method="POST" action="{{ route('logout') }}">
-              @csrf
-
-              <x-dropdown-link :href="route('logout')"
-                      onclick="event.preventDefault();
-                                  this.closest('form').submit();">
-                  {{ __('Log Out') }}
+            
+              <x-dropdown-link :href="route('post.index')">
+                      {{ __('All Posts') }}
               </x-dropdown-link>
-          </form>
+              <x-dropdown-link :href="route('category.index')">
+                {{ __('Categories') }}
+              </x-dropdown-link>
+              <x-dropdown-link :href="route('tag.index')">
+                {{ __('Tags') }}
+              </x-dropdown-link>
+              <form method="POST" action="{{ route('logout') }}">
+                @csrf
+  
+                <x-dropdown-link :href="route('logout')"
+                        onclick="event.preventDefault();
+                                    this.closest('form').submit();">
+                    {{ __('Log Out') }}
+                </x-dropdown-link>
+              </form>
           </div>
+          @else
+          <a href="{{route('login')}}">Login</a>
+          @endauth
+
+
+        
         </li>
       </ul>
     </div>

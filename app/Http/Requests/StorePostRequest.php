@@ -27,6 +27,7 @@ class StorePostRequest extends FormRequest
             'title' => 'required|unique:posts,title,'.$this->post.'',
             'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
             'body' => 'required',
+            'category_id'=>'required',
 
         ];
     }
@@ -38,8 +39,8 @@ class StorePostRequest extends FormRequest
             'body.required' =>'Required',
             'slug.required' => 'Required',
             'slug.unique' => 'Need TO Update',
+            
         ];
     }
 
- 
 }
